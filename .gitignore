@@ -1,0 +1,5 @@
+# files for github to ignore whe committing to it
+
+venv/
+__pycache__/
+playwright/.cache/
