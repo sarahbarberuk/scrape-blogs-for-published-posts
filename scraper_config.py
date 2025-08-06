@@ -20,15 +20,6 @@ SCRAPER_CONFIGS = {
         "needs_click_to_load_more": True,
         "load_more_selector": 'button:has-text("Load more")',
         "load_more_delay": 2000
-    },
-    "stytch": {
-        "display_name": "Stytch",
-        "url": "https://stytch.com/blog/category/latest/",
-        "post_selector": "div[class^='sc-41967d05-0']",
-        "title_selector": "h3[class^='sc-3cfc3a4a-0']",
-        "date_selector": "div[class^='sc-556084ac-0'] + div[class^='sc-556084ac-0']",
-        "base_url": "https://www.stytch.com",
-        "needs_click_to_load_more": False
     }
 }
 
