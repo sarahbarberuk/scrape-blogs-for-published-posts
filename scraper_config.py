@@ -1,5 +1,6 @@
 SCRAPER_CONFIGS = {
-    "contentful": {
+
+        "contentful": {
         "display_name": "Contentful",
         "url": "https://www.contentful.com/blog/category/guides/",
         "post_selector": 'a[class*="blog_entry_card_card"]',
@@ -8,7 +9,9 @@ SCRAPER_CONFIGS = {
         "base_url": "https://www.contentful.com",
         "needs_click_to_load_more": True,
         "load_more_selector": 'button:has-text("See more articles")',
-        "load_more_delay": 2000
+        "load_more_delay": 2000,
+        "wait_until": "networkidle"
+
     },
     "appsmith": {
         "display_name": "Appsmith",
@@ -19,8 +22,19 @@ SCRAPER_CONFIGS = {
         "base_url": "https://www.appsmith.com",
         "needs_click_to_load_more": True,
         "load_more_selector": 'button:has-text("Load more")',
-        "load_more_delay": 2000
+        "load_more_delay": 2000,
+        "wait_until": "networkidle"
+
+    },
+    "stytch": {
+        "display_name": "Stytch",
+        "url": "https://stytch.com/blog/category/latest/",
+        "post_selector": "a[class*='sc-a6d4489c-2']",                  
+        "title_selector": "h3[class*='sc-3cfc3a4a-0']",                             
+        "date_selector": "div[class*='sc-556084ac-0'] + div",  
+        "base_url": "https://www.stytch.com",
+        "needs_click_to_load_more": False,
+        "wait_until": "domcontentloaded"
+
     }
 }
-
-

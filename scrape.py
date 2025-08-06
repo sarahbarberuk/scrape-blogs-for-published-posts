@@ -11,7 +11,9 @@ def scrape_blog_with_playwright(config):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
-        page.goto(config['url'], wait_until="networkidle", timeout=60000)
+        
+        wait_until = config.get("wait_until", "networkidle")  # default to "networkidle"
+        page.goto(config['url'], wait_until=wait_until, timeout=60000)
 
         selector = config.get('load_more_selector')
         if selector:
