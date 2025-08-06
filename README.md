@@ -14,6 +14,8 @@ python scrape.py
 It uses Playwright to open a headless browser and scrape web pages.
 If the website changes significantly, the scraper will break but it can be fixed by updating the details in scraper_config.py - see Setup section below.
 
+NOTE: Some sites have anti scraping measures so can't run a headless browser. Akamai is one of these. A browser window will open up in this case.
+
 1. Goes to a specified web page
 2. Looks to see if there's a "Load more"-type button and clicks it until all posts are loaded.
 3. Finds the <a> links for each post via a CSS selector or a Playwright selector.

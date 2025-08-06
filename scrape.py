@@ -9,12 +9,25 @@ from scraper_config import SCRAPER_CONFIGS  # import config
 def scrape_blog_with_playwright(config):
     print(f"[INFO] Launching browser for: {config['url']}")
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        headless = not config.get('force_headed', False)
+        browser = p.chromium.launch(headless=headless)
         page = browser.new_page()
-        
+
         wait_until = config.get("wait_until", "networkidle")  # default to "networkidle"
         page.goto(config['url'], wait_until=wait_until, timeout=60000)
 
+        # ✅ Handle cookie consent if present
+        try:
+            cookie_button = page.locator('#onetrust-accept-btn-handler')
+            cookie_button.wait_for(timeout=5000)  # wait up to 5s
+            if cookie_button.is_visible():
+                print("[INFO] Accepting cookie consent...")
+                cookie_button.click(force=True)
+                page.wait_for_timeout(2000)
+        except Exception as e:
+            print(f"[WARN] Could not click cookie consent button: {e}")
+
+        # ✅ Click "Load more" if selector is provided
         selector = config.get('load_more_selector')
         if selector:
             while True:
@@ -25,9 +38,13 @@ def scrape_blog_with_playwright(config):
                         button.click()
                         page.wait_for_timeout(config.get('load_more_delay', 2000))
                     else:
+                        print("[INFO] Button not visible or not enabled, breaking.")
                         break
-                except:
+                except Exception as e:
+                    print(f"[ERROR] Exception during 'load more': {e}")
                     break
+        else:
+            print("[INFO] There is no load more selector")
 
         page.wait_for_timeout(1000)
         html = page.content()

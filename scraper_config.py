@@ -1,6 +1,5 @@
 SCRAPER_CONFIGS = {
-
-        "contentful": {
+    "contentful": {
         "display_name": "Contentful",
         "url": "https://www.contentful.com/blog/category/guides/",
         "post_selector": 'a[class*="blog_entry_card_card"]',
@@ -10,7 +9,7 @@ SCRAPER_CONFIGS = {
         "needs_click_to_load_more": True,
         "load_more_selector": 'button:has-text("See more articles")',
         "load_more_delay": 2000,
-        "wait_until": "networkidle"
+        "wait_until": "domcontentloaded"
 
     },
     "appsmith": {
@@ -23,7 +22,7 @@ SCRAPER_CONFIGS = {
         "needs_click_to_load_more": True,
         "load_more_selector": 'button:has-text("Load more")',
         "load_more_delay": 2000,
-        "wait_until": "networkidle"
+        "wait_until": "domcontentloaded"
 
     },
     "stytch": {
@@ -36,5 +35,18 @@ SCRAPER_CONFIGS = {
         "needs_click_to_load_more": False,
         "wait_until": "domcontentloaded"
 
+    },
+    "akamai": {
+        "display_name": "Akamai",
+        "url": "https://akamai.com/blog/",
+        "post_selector": "div.card.post", 
+        "title_selector": "h3 > a",        
+        "date_selector": "div.post__author",
+        "base_url": "https://www.akamai.com",
+        "needs_click_to_load_more": True,
+        "load_more_selector": 'div.filter-items__load-more a[rel="next"]',
+        "load_more_delay": 3000,
+        "wait_until": "networkidle",
+        "force_headed": True  
     }
 }
