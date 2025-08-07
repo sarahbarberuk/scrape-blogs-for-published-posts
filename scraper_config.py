@@ -16,8 +16,14 @@ SCRAPER_CONFIGS = {
         "display_name": "Appsmith",
         "url": "https://www.appsmith.com/blog",
         "post_selector": "a[href^='/blog/']",
-        "title_selector": 'span.text-base.font-medium.leading-tight',
-        "date_selector": 'div.text-xs.text-primary-light-500\\/70',
+        "title_selectors": [
+            "h2.leading-tight span",                               
+            "span.text-base.font-medium.leading-tight"  
+        ],
+        "date_selectors": [
+            "h2.font-display ~ div time", 
+            "div.text-xs.text-primary-light-500\\/70"
+        ],
         "base_url": "https://www.appsmith.com",
         "needs_click_to_load_more": True,
         "load_more_selector": 'button:has-text("Load more")',
@@ -28,13 +34,12 @@ SCRAPER_CONFIGS = {
     "stytch": {
         "display_name": "Stytch",
         "url": "https://stytch.com/blog/category/latest/",
-        "post_selector": "a[class*='sc-a6d4489c-2']",                  
-        "title_selector": "h3[class*='sc-3cfc3a4a-0']",                             
-        "date_selector": "div[class*='sc-556084ac-0'] + div",  
+        "post_selector": "main > section:first-of-type a[href^='/blog/']:has(h3)",
+        "title_selector": "main > section:first-of-type a[href^='/blog/'] h3",
+        "date_selector": "main > section:first-of-type a[href^='/blog/'] p",
         "base_url": "https://www.stytch.com",
         "needs_click_to_load_more": False,
         "wait_until": "domcontentloaded"
-
     },
     "akamai": {
         "display_name": "Akamai",

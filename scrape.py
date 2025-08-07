@@ -57,12 +57,14 @@ def parse_blog_html(html, config, client_name):
     posts = []
 
     for i, post in enumerate(soup.select(config['post_selector']), start=1):
-        title_tag = post.select_one(config['title_selector'])
-        date_tag = post.select_one(config['date_selector'])
+        title_tag = _first_match(post, config.get('title_selectors') or config.get('title_selector'))
+        date_tag  = _first_match(post, config.get('date_selectors')  or config.get('date_selector'))
 
         title = title_tag.get_text(strip=True) if title_tag else 'Untitled'
-        date = date_tag.get_text(strip=True) if date_tag else ''
-        href = post.get('href', '')
+        date  = date_tag.get_text(strip=True)  if date_tag  else ''
+
+        link_tag = post.select_one("a") if post.name != "a" else post
+        href = link_tag.get("href", "") if link_tag else post.get("href", "")
         link = f"{config['base_url']}{href}" if href.startswith('/') else href
 
         posts.append((title, link, date, client_name))
@@ -70,7 +72,6 @@ def parse_blog_html(html, config, client_name):
 
     print(f"[INFO] ({client_name}) Found {len(posts)} posts")
     return posts
-
 
 def write_csv(all_posts, filename):
     print(f"[INFO] Writing to CSV: {filename}")
@@ -82,10 +83,26 @@ def write_csv(all_posts, filename):
             writer.writerow([*post, now])
     print(f"[INFO] Saved {len(all_posts)} posts to {filename}")
 
+def _first_match(post, selectors):
+    """Return the first matching element for any of the selectors (string or list)."""
+    if not selectors:
+        return None
+    if isinstance(selectors, str):
+        selectors = [selectors]
+    for sel in selectors:
+        if not sel:
+            continue
+        node = post.select_one(sel)
+        if node:
+            return node
+    return None
+
 
 def main():
     all_posts = []
-    output_file = 'published_articles.csv'
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    output_file = f"published_articles_{timestamp}.csv"
+
 
     for client_name, config in SCRAPER_CONFIGS.items():
         print(f"\n[INFO] Scraping client: {client_name}")
