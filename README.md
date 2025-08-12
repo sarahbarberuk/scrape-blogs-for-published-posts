@@ -42,3 +42,8 @@ NOTE: Some sites have anti scraping measures so can't run a headless browser. Ak
 - Enter the correct details in `scraper_config.py` - a developer can help work out what the selectors should be.
 - The "url" needs to be the URL of a page with all the blog posts on it. Not a page that only has 3 sample posts on it. Click through until you get to a page with all the posts on it
 - Or if they're organized by category you can scrape each category separately by having a config section for each URL that needs crawling.
+
+## Future plans
+
+1. Author names: currently the script only scrapes author names for Akamai and Appsmith. This can be changed later if needed but requires more work due to author name not being on the blog postings page.
+2. Write to google drive: currently the script generates a local CSV. but let's see if this works for a few months first before making lots of changes as web crawlers are notoriously brittle and we need to see if it's worth the effort first.
