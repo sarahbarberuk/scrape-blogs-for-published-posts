@@ -1,4 +1,4 @@
-# files for github to ignore whe committing to it
+# files for github to ignore when committing to it
 
 venv/
 __pycache__/

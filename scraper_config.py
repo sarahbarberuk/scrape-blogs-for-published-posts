@@ -1,3 +1,4 @@
+# Configuration for each client. E.g. what URL to be scraped, how to identify titles, dates etc.
 SCRAPER_CONFIGS = {
     "contentful": {
         "display_name": "Contentful",

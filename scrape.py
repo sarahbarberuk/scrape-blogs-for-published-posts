@@ -1,3 +1,4 @@
+# The full script that scrapes all the blogs
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import csv
