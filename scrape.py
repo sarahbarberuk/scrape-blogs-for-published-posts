@@ -59,16 +59,18 @@ def parse_blog_html(html, config, client_name):
     for i, post in enumerate(soup.select(config['post_selector']), start=1):
         title_tag = _first_match(post, config.get('title_selectors') or config.get('title_selector'))
         date_tag  = _first_match(post, config.get('date_selectors')  or config.get('date_selector'))
+        author_tag = _first_match(post, config.get('author_selectors') or config.get('author_selector'))
 
         title = title_tag.get_text(strip=True) if title_tag else 'Untitled'
         date  = date_tag.get_text(strip=True)  if date_tag  else ''
+        author = author_tag.get_text(strip=True) if author_tag else ''
 
         link_tag = post.select_one("a") if post.name != "a" else post
         href = link_tag.get("href", "") if link_tag else post.get("href", "")
         link = f"{config['base_url']}{href}" if href.startswith('/') else href
 
-        posts.append((title, link, date, client_name))
-        print(f"[DEBUG] ({client_name}) Post {i}: Title='{title}', URL='{link}', Date='{date}'")
+        posts.append((title, link, date, author, client_name))
+        print(f"[DEBUG] ({client_name}) Post {i}: Title='{title}', URL='{link}', Date='{date}', Author='{author}'")
 
     print(f"[INFO] ({client_name}) Found {len(posts)} posts")
     return posts
@@ -78,7 +80,7 @@ def write_csv(all_posts, filename):
     now = datetime.utcnow().isoformat()
     with open(filename, mode='w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
-        writer.writerow(['Title', 'URL', 'Published Date', 'Client', 'Scraped At'])
+        writer.writerow(['Title', 'URL', 'Published Date', 'Author', 'Client', 'Scraped At'])
         for post in all_posts:
             writer.writerow([*post, now])
     print(f"[INFO] Saved {len(all_posts)} posts to {filename}")

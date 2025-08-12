@@ -2,17 +2,31 @@
 
 ## Run the script
 
+### Windows command line
+
+```
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+playwright install
+python scrape.py
+```
+
+### Linux
+
+```
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 playwright install
 sudo $(which playwright) install-deps
 python scrape.py
+```
 
 ## How the script works
 
 It uses Playwright to open a headless browser and scrape web pages.
-If the website changes significantly, the scraper will break but it can be fixed by updating the details in scraper_config.py - see Setup section below.
+If the website changes significantly, the scraper will break but it can be fixed by updating the details in `scraper_config.py` - see Setup section below.
 
 NOTE: Some sites have anti scraping measures so can't run a headless browser. Akamai is one of these. A browser window will open up in this case.
 
@@ -25,6 +39,6 @@ NOTE: Some sites have anti scraping measures so can't run a headless browser. Ak
 
 ## Setup
 
-- Enter the correct details in scraper_config.py - a developer can help work out what the selectors should be.
+- Enter the correct details in `scraper_config.py` - a developer can help work out what the selectors should be.
 - The "url" needs to be the URL of a page with all the blog posts on it. Not a page that only has 3 sample posts on it. Click through until you get to a page with all the posts on it
 - Or if they're organized by category you can scrape each category separately by having a config section for each URL that needs crawling.
