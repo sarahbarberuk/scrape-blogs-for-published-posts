@@ -56,7 +56,7 @@ SCRAPER_CONFIGS = {
         "needs_click_to_load_more": True,
         "load_more_selector": 'div.filter-items__load-more a[rel="next"]',
         "load_more_delay": 3000,
-        "wait_until": "networkidle",
+        "wait_until": "domcontentloaded",
         "force_headed": True  
     }
 }
